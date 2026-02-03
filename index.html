@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 600px; width: 90%; margin: 50px auto;
+            max-width: 500px; width: 90%; margin: 50px auto;
             padding: 30px; background: rgba(255, 255, 255, 0.9);
             border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
@@ -47,11 +47,11 @@
         }
 
         .gif-box img { 
-            max-height: 100%; max-width: 100%; border-radius: 15px; 
+            max-height: 100%; border-radius: 15px; 
         }
 
-        h1 { font-size: 1.6rem; color: var(--deep-red); margin-bottom: 15px; }
-        p { font-size: 1.1rem; margin-bottom: 30px; }
+        h1 { font-size: 1.5rem; color: var(--deep-red); margin-bottom: 15px; padding: 0 10px; }
+        p { font-size: 1.1rem; margin-bottom: 30px; padding: 0 10px; }
 
         .btn-group { 
             display: flex; justify-content: center; align-items: center; 
@@ -64,7 +64,7 @@
             transition: transform 0.2s ease;
         }
 
-        .btn-yes { background-color: var(--deep-red); color: white; position: relative; z-index: 10; }
+        .btn-yes { background-color: var(--deep-red); color: white; position: relative; z-index: 100; }
         .btn-no { background-color: #ddd; color: #333; }
         .hidden { display: none; }
     </style>
@@ -75,7 +75,7 @@
 
     <div id="page1" class="container">
         <div class="gif-box">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif" alt="Bubu Dudu Intro">
+            <img src="https://i.imgur.com/m696M7n.gif" alt="Bubu Dudu Hello">
         </div>
         <h1>En chinni hangella yavd yavdo link click madbardu antha gottilva? 🤨</h1>
         <p>Hogli bidu, madi aythalla, munduk hogana...</p>
@@ -84,7 +84,7 @@
 
     <div id="page2" class="container hidden">
         <div class="gif-box">
-            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif">
+            <img id="main-gif" src="https://i.imgur.com/6o8mN7p.gif" alt="Bubu Dudu Request">
         </div>
         <h1 id="question-text">Vishya en andre, Valentines Day banthu alva... <br>Neen nan Valentine agthiya Bangu? 🌹</h1>
         <div class="btn-group">
@@ -95,7 +95,7 @@
 
     <div id="page3" class="container hidden">
         <div class="gif-box">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/nZ7fdasD1FIsM/giphy.gif">
+            <img src="https://i.imgur.com/v8S98yA.gif" alt="Bubu Dudu Love">
         </div>
         <h1>Ist bega opkondya? No click madthiya anonde! 😂❤️</h1>
         <p>Love you Bangu! ❤️</p>
@@ -121,15 +121,15 @@
             if(noCount === 1) {
                 q.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
                 n.innerText = "Sari Hogu";
-                g.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/6109fNjgS20xO/giphy.gif";
+                g.src = "https://i.imgur.com/Gue7TjS.gif"; // Sad walking away
             } else if (noCount === 2) {
                 q.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
                 n.innerText = "Hu Kadme Agide";
-                g.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/vFuP5vLp7SntS/giphy.gif";
+                g.src = "https://i.imgur.com/6O67K6I.gif"; // Crying
             } else if (noCount === 3) {
                 q.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
                 n.innerText = "Bye Bye";
-                g.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/106LII8YtSpXnW/giphy.gif";
+                g.src = "https://i.imgur.com/sc7N7S3.gif"; // Very sad
             } else {
                 q.innerHTML = "Saak maade! Yes oththe please! 😭";
                 n.style.display = 'none';
