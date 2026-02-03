@@ -62,18 +62,23 @@
         }
 
         .photo-frame {
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 200px;
             margin: 0 auto 20px auto;
-            border-radius: 50%;
+            border-radius: 20px; /* Slightly rounded squares fit GIFs better */
             border: 5px solid white;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background-color: white;
         }
 
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-frame img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
 
-        h1 { font-size: 2rem; color: var(--deep-red); margin-bottom: 15px; line-height: 1.4; }
+        h1 { font-size: 1.8rem; color: var(--deep-red); margin-bottom: 15px; line-height: 1.4; }
         p { font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; }
 
         /* Buttons */
@@ -99,6 +104,8 @@
             background-color: var(--deep-red);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 56, 92, 0.4);
+            z-index: 100; /* Ensure big button stays on top */
+            position: relative;
         }
 
         .btn-no {
@@ -117,7 +124,7 @@
 
     <div class="container" id="page1">
         <div class="photo-frame">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif" alt="Cute">
+            <img src="https://media.tenor.com/W2d0qG9Xk00AAAAi/milk-and-mocha-bear.gif" alt="Cute">
         </div>
         <h1>En chinni hangella yavd yavdo link click madbardu antha gottilva? 🤨</h1>
         <p>Hogli bidu, madi aythalla, munduk hogana...</p>
@@ -126,7 +133,7 @@
 
     <div class="container hidden" id="page2">
         <div class="photo-frame">
-            <img src="https://media.tenor.com/h5_I6jC_ufoAAAAi/mocha-bear-hearts.gif" alt="Please">
+            <img id="main-gif" src="https://media.tenor.com/h5_I6jC_ufoAAAAi/mocha-bear-hearts.gif" alt="Please">
         </div>
         
         <h1 id="question-text">Vishya en andre, Valentines Day banthu alva... <br>Neen nan Valentine agthiya Bangu? 🌹</h1>
@@ -164,15 +171,20 @@
             const questionText = document.getElementById('question-text');
             const yesBtn = document.getElementById('yesBtn');
             const noBtn = document.getElementById('noBtn');
+            const mainGif = document.getElementById('main-gif');
 
             // Change text based on how many times she clicked No
             if (noCount === 1) {
                 questionText.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
                 noBtn.innerText = "Sari Hogu";
+                // Change GIF to Sad walking away
+                mainGif.src = "https://media.tenor.com/Avs5f5K3i1wAAAAi/sad-bear.gif"; 
             } 
             else if (noCount === 2) {
                 questionText.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
                 noBtn.innerText = "Hu Kadme Agide";
+                // Change GIF to Crying
+                mainGif.src = "https://media.tenor.com/4qI7GjE33vUAAAAi/mocha-bear-sad.gif";
             } 
             else if (noCount === 3) {
                 questionText.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
@@ -187,7 +199,7 @@
             yesScale += 0.5; // Increase size by 50% each time
             yesBtn.style.transform = `scale(${yesScale})`;
             
-            // Optional: Adjust margins so the big button doesn't overlap text immediately
+            // Adjust margin so big button doesn't block text
             yesBtn.style.margin = `${10 * yesScale}px`;
         }
 
