@@ -75,7 +75,7 @@
 
     <div id="page1" class="container">
         <div class="gif-box">
-            <img src="https://i.imgur.com/m696M7n.gif" alt="Bubu Dudu Hello">
+            <img src="https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-hello.gif" alt="Bubu Dudu Hello">
         </div>
         <h1>En chinni hangella yavd yavdo link click madbardu antha gottilva? 🤨</h1>
         <p>Hogli bidu, madi aythalla, munduk hogana...</p>
@@ -84,7 +84,7 @@
 
     <div id="page2" class="container hidden">
         <div class="gif-box">
-            <img id="main-gif" src="https://i.imgur.com/6o8mN7p.gif" alt="Bubu Dudu Request">
+            <img id="main-gif" src="https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-request.gif" alt="Bubu Dudu Request">
         </div>
         <h1 id="question-text">Vishya en andre, Valentines Day banthu alva... <br>Neen nan Valentine agthiya Bangu? 🌹</h1>
         <div class="btn-group">
@@ -95,7 +95,7 @@
 
     <div id="page3" class="container hidden">
         <div class="gif-box">
-            <img src="https://i.imgur.com/v8S98yA.gif" alt="Bubu Dudu Love">
+            <img src="https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-kiss.gif" alt="Bubu Dudu Love">
         </div>
         <h1>Henge, nangottu neen opkothiya antha! 😎❤️</h1>
         <p>Thank you Bangu, love you! ❤️</p>
@@ -121,15 +121,15 @@
             if(noCount === 1) {
                 q.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
                 n.innerText = "Sari Hogu";
-                g.src = "https://i.imgur.com/Gue7TjS.gif"; 
+                g.src = "https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-sad-walk.gif"; 
             } else if (noCount === 2) {
                 q.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
                 n.innerText = "Hu Kadme Agide";
-                g.src = "https://i.imgur.com/6O67K6I.gif"; 
+                g.src = "https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-cry.gif"; 
             } else if (noCount === 3) {
                 q.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
                 n.innerText = "Bye Bye";
-                g.src = "https://i.imgur.com/sc7N7S3.gif"; 
+                g.src = "https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-angry.gif"; 
             } else {
                 q.innerHTML = "Saak maade! Yes oththe please! 😭";
                 n.style.display = 'none';
@@ -146,11 +146,6 @@
                 spread: 70,
                 origin: { y: 0.6 }
             });
-            // Extra bursts
-            setTimeout(() => {
-                confetti({ particleCount: 100, spread: 100, origin: { x: 0 } });
-                confetti({ particleCount: 100, spread: 100, origin: { x: 1 } });
-            }, 500);
         }
 
         setInterval(() => {
