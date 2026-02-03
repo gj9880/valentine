@@ -26,15 +26,10 @@
             text-align: center;
         }
 
-        /* Floating Hearts Background */
         .hearts-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
         }
 
         .heart {
@@ -48,7 +43,6 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Main Container */
         .container {
             max-width: 600px;
             width: 90%;
@@ -58,64 +52,32 @@
             backdrop-filter: blur(10px);
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
         }
 
         .photo-frame {
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
             margin: 0 auto 20px auto;
-            border-radius: 20px; /* Slightly rounded squares fit GIFs better */
-            border: 5px solid white;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             background-color: white;
         }
 
         .photo-frame img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; 
+            object-fit: contain; 
         }
 
-        h1 { font-size: 1.8rem; color: var(--deep-red); margin-bottom: 15px; line-height: 1.4; }
+        h1 { font-size: 1.8rem; color: var(--deep-red); margin-bottom: 15px; }
         p { font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; }
 
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+        .btn-group { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
+        button { padding: 15px 40px; font-size: 1.2rem; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; }
 
-        button {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .btn-yes {
-            background-color: var(--deep-red);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 56, 92, 0.4);
-            z-index: 100; /* Ensure big button stays on top */
-            position: relative;
-        }
-
-        .btn-no {
-            background-color: #e0e0e0;
-            color: #555;
-        }
-
-        /* Sections Control */
+        .btn-yes { background-color: var(--deep-red); color: white; position: relative; z-index: 100; }
+        .btn-no { background-color: #e0e0e0; color: #555; }
         .hidden { display: none; }
-
     </style>
 </head>
 <body>
@@ -124,7 +86,7 @@
 
     <div class="container" id="page1">
         <div class="photo-frame">
-            <img src="https://media.tenor.com/W2d0qG9Xk00AAAAi/milk-and-mocha-bear.gif" alt="Cute">
+            <img src="https://media.tenor.com/00_7pP_v-98AAAAi/bubu-dudu-bubu.gif" alt="Bubu Dudu">
         </div>
         <h1>En chinni hangella yavd yavdo link click madbardu antha gottilva? 🤨</h1>
         <p>Hogli bidu, madi aythalla, munduk hogana...</p>
@@ -133,11 +95,9 @@
 
     <div class="container hidden" id="page2">
         <div class="photo-frame">
-            <img id="main-gif" src="https://media.tenor.com/h5_I6jC_ufoAAAAi/mocha-bear-hearts.gif" alt="Please">
+            <img id="main-gif" src="https://media.tenor.com/vS3_U_k_y70AAAAi/bubu-dudu-panda.gif">
         </div>
-        
         <h1 id="question-text">Vishya en andre, Valentines Day banthu alva... <br>Neen nan Valentine agthiya Bangu? 🌹</h1>
-        
         <div class="btn-group">
             <button class="btn-yes" id="yesBtn" onclick="sheSaidYes()">Yes! ❤️</button>
             <button class="btn-no" id="noBtn" onclick="sheSaidNo()">No</button>
@@ -146,26 +106,21 @@
 
     <div class="container hidden" id="page3">
         <div class="photo-frame">
-            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Kisses">
+            <img src="https://media.tenor.com/T0_6p9oYInMAAAAi/bubu-dudu-kiss.gif">
         </div>
         <h1>Ist bega opkondya? No click madthiya anonde! 😂❤️</h1>
-        <p>Love you! See you soon! 🍕🍷</p>
+        <p>Love you Bangu! ❤️</p>
     </div>
 
     <script>
-        // --- Logic Variables ---
         let noCount = 0;
-        let yesScale = 1; // Tracks the size of the Yes button
+        let yesScale = 1;
 
-        // --- Flow Functions ---
-
-        // 1. Move from Intro to Question
         function goToPage2() {
             document.getElementById('page1').classList.add('hidden');
             document.getElementById('page2').classList.remove('hidden');
         }
 
-        // 2. Logic when she clicks NO
         function sheSaidNo() {
             noCount++;
             const questionText = document.getElementById('question-text');
@@ -173,44 +128,44 @@
             const noBtn = document.getElementById('noBtn');
             const mainGif = document.getElementById('main-gif');
 
-            // Change text based on how many times she clicked No
             if (noCount === 1) {
                 questionText.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
                 noBtn.innerText = "Sari Hogu";
-                // Change GIF to Sad walking away
-                mainGif.src = "https://media.tenor.com/Avs5f5K3i1wAAAAi/sad-bear.gif"; 
+                // Sad Bubu Dudu
+                mainGif.src = "https://media.tenor.com/y8_2V4X_O2oAAAAi/bubu-dudu-sad.gif"; 
             } 
             else if (noCount === 2) {
                 questionText.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
                 noBtn.innerText = "Hu Kadme Agide";
-                // Change GIF to Crying
-                mainGif.src = "https://media.tenor.com/4qI7GjE33vUAAAAi/mocha-bear-sad.gif";
+                // Crying Bubu Dudu
+                mainGif.src = "https://media.tenor.com/H6p7vE2X8WAAAAAi/bubu-dudu-cry.gif";
             } 
             else if (noCount === 3) {
                 questionText.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
                 noBtn.innerText = "Bye Bye";
+                // Angry/Sad Bubu
+                mainGif.src = "https://media.tenor.com/R_Wj0F_E7mIAAAAi/bubu-dudu.gif";
             }
             else {
                 questionText.innerHTML = "Saak maade! Yes oththe please! 😭";
-                noBtn.style.display = 'none'; // Hide No button if she is too stubborn
+                noBtn.style.display = 'none';
             }
 
-            // Grow the YES button
-            yesScale += 0.5; // Increase size by 50% each time
+            yesScale += 0.6;
             yesBtn.style.transform = `scale(${yesScale})`;
-            
-            // Adjust margin so big button doesn't block text
-            yesBtn.style.margin = `${10 * yesScale}px`;
+            yesBtn.style.margin = `${15 * yesScale}px`;
         }
 
-        // 3. Logic when she clicks YES
         function sheSaidYes() {
             document.getElementById('page2').classList.add('hidden');
             document.getElementById('page3').classList.remove('hidden');
-            launchConfetti();
+            
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
         }
-
-        // --- Visual Effects (Hearts & Confetti) ---
 
         function createHeart() {
             const heart = document.createElement('div');
@@ -223,19 +178,6 @@
             setTimeout(() => { heart.remove(); }, 6000);
         }
         setInterval(createHeart, 300);
-
-        function launchConfetti() {
-            var duration = 5 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
     </script>
 </body>
 </html>
