@@ -9,32 +9,24 @@
         :root {
             --primary-pink: #ffafbd;
             --deep-red: #ff385c;
-            --soft-white: #fff5f6;
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, var(--primary-pink), #ffc3a0);
-            color: #4a4a4a;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-            text-align: center;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden; text-align: center;
         }
 
         .hearts-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none;
         }
 
         .heart {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.6);
+            position: absolute; color: rgba(255, 255, 255, 0.6);
             animation: float 6s linear infinite;
         }
 
@@ -44,39 +36,36 @@
         }
 
         .container {
-            max-width: 600px;
-            width: 90%;
-            margin-top: 50px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px; width: 90%; margin: 50px auto;
+            padding: 30px; background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .photo-frame {
-            width: 250px;
-            height: 250px;
-            margin: 0 auto 20px auto;
-            border-radius: 20px;
-            overflow: hidden;
-            background-color: white;
+        .gif-box {
+            width: 100%; height: 200px; margin-bottom: 20px;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .photo-frame img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
+        .gif-box img { 
+            max-height: 100%; max-width: 100%; border-radius: 15px; 
         }
 
-        h1 { font-size: 1.8rem; color: var(--deep-red); margin-bottom: 15px; }
-        p { font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; }
+        h1 { font-size: 1.6rem; color: var(--deep-red); margin-bottom: 15px; }
+        p { font-size: 1.1rem; margin-bottom: 30px; }
 
-        .btn-group { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
-        button { padding: 15px 40px; font-size: 1.2rem; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; }
+        .btn-group { 
+            display: flex; justify-content: center; align-items: center; 
+            gap: 15px; flex-wrap: wrap; 
+        }
 
-        .btn-yes { background-color: var(--deep-red); color: white; position: relative; z-index: 100; }
-        .btn-no { background-color: #e0e0e0; color: #555; }
+        button { 
+            padding: 12px 30px; font-size: 1rem; border: none; 
+            border-radius: 50px; cursor: pointer; font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-yes { background-color: var(--deep-red); color: white; position: relative; z-index: 10; }
+        .btn-no { background-color: #ddd; color: #333; }
         .hidden { display: none; }
     </style>
 </head>
@@ -84,29 +73,29 @@
 
     <div class="hearts-bg" id="heartContainer"></div>
 
-    <div class="container" id="page1">
-        <div class="photo-frame">
-            <img src="https://media.tenor.com/00_7pP_v-98AAAAi/bubu-dudu-bubu.gif" alt="Bubu Dudu">
+    <div id="page1" class="container">
+        <div class="gif-box">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif" alt="Bubu Dudu Intro">
         </div>
         <h1>En chinni hangella yavd yavdo link click madbardu antha gottilva? 🤨</h1>
         <p>Hogli bidu, madi aythalla, munduk hogana...</p>
-        <button class="btn-yes" onclick="goToPage2()">Yes, hogana!</button>
+        <button class="btn-yes" onclick="showPage(2)">Yes, hogana!</button>
     </div>
 
-    <div class="container hidden" id="page2">
-        <div class="photo-frame">
-            <img id="main-gif" src="https://media.tenor.com/vS3_U_k_y70AAAAi/bubu-dudu-panda.gif">
+    <div id="page2" class="container hidden">
+        <div class="gif-box">
+            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif">
         </div>
         <h1 id="question-text">Vishya en andre, Valentines Day banthu alva... <br>Neen nan Valentine agthiya Bangu? 🌹</h1>
         <div class="btn-group">
-            <button class="btn-yes" id="yesBtn" onclick="sheSaidYes()">Yes! ❤️</button>
-            <button class="btn-no" id="noBtn" onclick="sheSaidNo()">No</button>
+            <button id="yesBtn" class="btn-yes" onclick="showPage(3)">Yes! ❤️</button>
+            <button id="noBtn" class="btn-no" onclick="handleNo()">No</button>
         </div>
     </div>
 
-    <div class="container hidden" id="page3">
-        <div class="photo-frame">
-            <img src="https://media.tenor.com/T0_6p9oYInMAAAAi/bubu-dudu-kiss.gif">
+    <div id="page3" class="container hidden">
+        <div class="gif-box">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/nZ7fdasD1FIsM/giphy.gif">
         </div>
         <h1>Ist bega opkondya? No click madthiya anonde! 😂❤️</h1>
         <p>Love you Bangu! ❤️</p>
@@ -114,70 +103,56 @@
 
     <script>
         let noCount = 0;
-        let yesScale = 1;
+        let scale = 1;
 
-        function goToPage2() {
-            document.getElementById('page1').classList.add('hidden');
-            document.getElementById('page2').classList.remove('hidden');
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById('page' + pageId).classList.remove('hidden');
+            if(pageId === 3) launchConfetti();
         }
 
-        function sheSaidNo() {
+        function handleNo() {
             noCount++;
-            const questionText = document.getElementById('question-text');
-            const yesBtn = document.getElementById('yesBtn');
-            const noBtn = document.getElementById('noBtn');
-            const mainGif = document.getElementById('main-gif');
+            const q = document.getElementById('question-text');
+            const g = document.getElementById('main-gif');
+            const y = document.getElementById('yesBtn');
+            const n = document.getElementById('noBtn');
 
-            if (noCount === 1) {
-                questionText.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
-                noBtn.innerText = "Sari Hogu";
-                // Sad Bubu Dudu
-                mainGif.src = "https://media.tenor.com/y8_2V4X_O2oAAAAi/bubu-dudu-sad.gif"; 
-            } 
-            else if (noCount === 2) {
-                questionText.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
-                noBtn.innerText = "Hu Kadme Agide";
-                // Crying Bubu Dudu
-                mainGif.src = "https://media.tenor.com/H6p7vE2X8WAAAAAi/bubu-dudu-cry.gif";
-            } 
-            else if (noCount === 3) {
-                questionText.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
-                noBtn.innerText = "Bye Bye";
-                // Angry/Sad Bubu
-                mainGif.src = "https://media.tenor.com/R_Wj0F_E7mIAAAAi/bubu-dudu.gif";
-            }
-            else {
-                questionText.innerHTML = "Saak maade! Yes oththe please! 😭";
-                noBtn.style.display = 'none';
+            if(noCount === 1) {
+                q.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
+                n.innerText = "Sari Hogu";
+                g.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/6109fNjgS20xO/giphy.gif";
+            } else if (noCount === 2) {
+                q.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
+                n.innerText = "Hu Kadme Agide";
+                g.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/vFuP5vLp7SntS/giphy.gif";
+            } else if (noCount === 3) {
+                q.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
+                n.innerText = "Bye Bye";
+                g.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/106LII8YtSpXnW/giphy.gif";
+            } else {
+                q.innerHTML = "Saak maade! Yes oththe please! 😭";
+                n.style.display = 'none';
             }
 
-            yesScale += 0.6;
-            yesBtn.style.transform = `scale(${yesScale})`;
-            yesBtn.style.margin = `${15 * yesScale}px`;
+            scale += 0.5;
+            y.style.transform = `scale(${scale})`;
+            y.style.margin = `${10 * scale}px`;
         }
 
-        function sheSaidYes() {
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page3').classList.remove('hidden');
-            
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+        function launchConfetti() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            document.getElementById('heartContainer').appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 6000);
-        }
-        setInterval(createHeart, 300);
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.classList.add('heart'); h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = Math.random() * 20 + 10 + 'px';
+            h.style.animationDuration = Math.random() * 3 + 3 + 's';
+            document.getElementById('heartContainer').appendChild(h);
+            setTimeout(() => h.remove(), 6000);
+        }, 300);
     </script>
 </body>
 </html>
