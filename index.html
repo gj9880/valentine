@@ -3,149 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Valentine?</title>
+    <title>For My Bangu ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
+        :root {
+            --primary-pink: #ffafbd;
+            --deep-red: #ff385c;
+            --soft-white: #fff5f6;
+        }
+
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            background-color: #fce4ec; /* Light pink background */
-            font-family: 'Arial', sans-serif;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-pink), #ffc3a0);
+            color: #4a4a4a;
+            min-height: 100vh;
+            display: flex;
             flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
             text-align: center;
-            overflow: hidden; /* Prevents scrollbars when button gets huge */
         }
 
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Container */
         .container {
-            position: relative;
+            max-width: 600px;
+            width: 90%;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
-        .gif_container {
-            margin-bottom: 20px;
+        .photo-frame {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            border: 5px solid white;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .gif_container img {
-            width: 200px; /* Adjust size as needed */
-            border-radius: 10px;
-        }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        h1 {
-            color: #d32f2f; /* Deep red */
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
+        h1 { font-size: 2rem; color: var(--deep-red); margin-bottom: 15px; line-height: 1.4; }
+        p { font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; }
 
-        .buttons {
+        /* Buttons */
+        .btn-group {
             display: flex;
             justify-content: center;
-            gap: 20px;
             align-items: center;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
-        .btn {
-            padding: 10px 20px;
+        button {
+            padding: 15px 40px;
             font-size: 1.2rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: white;
             font-weight: bold;
         }
 
-        #yesButton {
-            background-color: #4caf50; /* Green */
+        .btn-yes {
+            background-color: var(--deep-red);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 56, 92, 0.4);
         }
 
-        #noButton {
-            background-color: #f44336; /* Red */
+        .btn-no {
+            background-color: #e0e0e0;
+            color: #555;
         }
-        
-        /* The hidden message style */
-        .hidden-message {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-        }
+
+        /* Sections Control */
+        .hidden { display: none; }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="gif_container">
-            <img id="mainGif" src="https://media.tenor.com/h5_I6jC_ufoAAAAi/mocha-bear-hearts.gif" alt="Cute Bear">
+    <div class="hearts-bg" id="heartContainer"></div>
+
+    <div class="container" id="page1">
+        <div class="photo-frame">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif" alt="Cute">
         </div>
-        <h1 id="question">Will you be my Valentine?</h1>
-        <div class="buttons">
-            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
-            <button class="btn" id="noButton" onclick="moveButton()">No</button>
+        <h1>En chinni hangella yavd yavdo link click madbardu antha gottilva? 🤨</h1>
+        <p>Hogli bidu, madi aythalla, munduk hogana...</p>
+        <button class="btn-yes" onclick="goToPage2()">Yes, hogana!</button>
+    </div>
+
+    <div class="container hidden" id="page2">
+        <div class="photo-frame">
+            <img src="https://media.tenor.com/h5_I6jC_ufoAAAAi/mocha-bear-hearts.gif" alt="Please">
+        </div>
+        
+        <h1 id="question-text">Vishya en andre, Valentines Day banthu alva... <br>Neen nan Valentine agthiya Bangu? 🌹</h1>
+        
+        <div class="btn-group">
+            <button class="btn-yes" id="yesBtn" onclick="sheSaidYes()">Yes! ❤️</button>
+            <button class="btn-no" id="noBtn" onclick="sheSaidNo()">No</button>
         </div>
     </div>
 
+    <div class="container hidden" id="page3">
+        <div class="photo-frame">
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Kisses">
+        </div>
+        <h1>Ist bega opkondya? No click madthiya anonde! 😂❤️</h1>
+        <p>Love you! See you soon! 🍕🍷</p>
+    </div>
+
     <script>
-        const messages = [
-            "No",
-            "Are you sure?",
-            "Really sure?",
-            "Think again!",
-            "Last chance!",
-            "Surely not?",
-            "You might regret this!",
-            "Give it another thought!",
-            "Are you absolutely certain?",
-            "This could be a mistake!",
-            "Have a heart!",
-            "Don't be so cold!",
-            "Change of heart?",
-            "Wouldn't you reconsider?",
-            "Is that your final answer?",
-            "You're breaking my heart ;(",
-            "Plsss? :( You're my favorite person!"
-        ];
+        // --- Logic Variables ---
+        let noCount = 0;
+        let yesScale = 1; // Tracks the size of the Yes button
 
-        let messageIndex = 0;
+        // --- Flow Functions ---
 
-        function moveButton() {
-            const noButton = document.getElementById('noButton');
-            const yesButton = document.getElementById('yesButton');
-            const mainGif = document.getElementById('mainGif');
-
-            // 1. Change the Text on the No Button
-            if (messageIndex < messages.length - 1) {
-                messageIndex++;
-            } else {
-                messageIndex = 0; // Loop back or stay at end
-            }
-            noButton.textContent = messages[messageIndex];
-
-            // 2. Make the Yes Button Bigger
-            const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-            const newSize = currentSize * 1.5; // Increases size by 1.5x every click
-            yesButton.style.fontSize = `${newSize}px`;
-            
-            // Optional: Increase padding to match text size
-            const currentPadding = parseFloat(window.getComputedStyle(yesButton).padding);
-            yesButton.style.padding = `${currentPadding * 1.2}px ${currentPadding * 1.5}px`;
-
-            // 3. Change GIF to sad/shocked bear (Optional update)
-            // You can uncomment the line below if you want the bear to look sad when they click no
-            // mainGif.src = "https://media.tenor.com/efbi1epFlVUAAAAi/sad-bear-cry.gif";
+        // 1. Move from Intro to Question
+        function goToPage2() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
         }
 
-        function nextPage() {
-            // Clear the screen and show the success message
-            document.body.innerHTML = `
-                <div class="container">
-                    <div class="gif_container">
-                        <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Kissing Bears" style="width: 300px;">
-                    </div>
-                    <h1 style="font-size: 3rem;">Ok yay!!! ❤️</h1>
-                </div>
-            `;
+        // 2. Logic when she clicks NO
+        function sheSaidNo() {
+            noCount++;
+            const questionText = document.getElementById('question-text');
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+
+            // Change text based on how many times she clicked No
+            if (noCount === 1) {
+                questionText.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
+                noBtn.innerText = "Sari Hogu";
+            } 
+            else if (noCount === 2) {
+                questionText.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
+                noBtn.innerText = "Hu Kadme Agide";
+            } 
+            else if (noCount === 3) {
+                questionText.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
+                noBtn.innerText = "Bye Bye";
+            }
+            else {
+                questionText.innerHTML = "Saak maade! Yes oththe please! 😭";
+                noBtn.style.display = 'none'; // Hide No button if she is too stubborn
+            }
+
+            // Grow the YES button
+            yesScale += 0.5; // Increase size by 50% each time
+            yesBtn.style.transform = `scale(${yesScale})`;
+            
+            // Optional: Adjust margins so the big button doesn't overlap text immediately
+            yesBtn.style.margin = `${10 * yesScale}px`;
+        }
+
+        // 3. Logic when she clicks YES
+        function sheSaidYes() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+            launchConfetti();
+        }
+
+        // --- Visual Effects (Hearts & Confetti) ---
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            document.getElementById('heartContainer').appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 300);
+
+        function launchConfetti() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+            }, 250);
         }
     </script>
 </body>
