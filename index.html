@@ -3,71 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wait... I have a question!</title>
+    <title>Wait! Open this! ❤️</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --primary-pink: #ffafbd;
             --deep-red: #ff385c;
-            --soft-white: #fff5f6;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Comic Sans MS', 'cursive', sans-serif;
+            font-family: 'Comic Sans MS', cursive;
             background: linear-gradient(135deg, var(--primary-pink), #ffc3a0);
-            color: #4a4a4a;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         .container {
-            max-width: 600px;
-            margin: 50px 20px;
+            max-width: 500px;
+            width: 90%;
             padding: 40px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 30px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             text-align: center;
-            z-index: 10;
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        /* Panda Gif Styling */
         .panda-img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 20px;
             margin-bottom: 20px;
+            object-fit: cover;
         }
 
-        h1 { color: var(--deep-red); font-size: 2.5rem; }
-        
+        h1 { color: var(--deep-red); font-size: 2rem; margin: 10px 0; }
+        p { font-size: 1.1rem; color: #555; }
+
         .btn-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 30px;
-            flex-wrap: wrap;
-            min-height: 150px;
+            min-height: 100px;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            padding: 15px 25px;
+            font-size: 1.1rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         #yesBtn {
             background-color: #4CAF50;
             color: white;
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            z-index: 100;
         }
 
         #noBtn {
@@ -76,163 +76,136 @@
             position: relative;
         }
 
-        /* Floating Hearts */
+        #celebration { display: none; }
+
         .floating-heart {
             position: fixed;
-            font-size: 20px;
-            user-select: none;
             pointer-events: none;
             z-index: 1;
             animation: floatUp 4s linear infinite;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Hidden Sections */
-        #celebration { display: none; }
-        
-        .love-meter {
-            margin-top: 20px;
-            background: #eee;
-            border-radius: 20px;
-            height: 20px;
-            width: 100%;
-            overflow: hidden;
-        }
-        .love-fill {
-            background: var(--deep-red);
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s;
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="container" id="quiz-box">
-        <img id="panda-display" class="panda-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif" alt="Panda">
+        <img id="panda-display" class="panda-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif">
         
-        <h1 id="main-question">Will you be my Valentine? 🐼❤️</h1>
-        <p id="sub-text">Please? It'll be the best date ever, I promise!</p>
-
-        <div class="love-meter"><div class="love-fill" id="loveFill"></div></div>
-        <p><small>Love Meter: <span id="meter-text">0%</span></small></p>
+        <h1 id="main-question">Will you be my Valentine? 🐼</h1>
+        <p id="sub-text">I promise it'll be fun!</p>
 
         <div class="btn-container">
             <button id="yesBtn" onclick="celebrate()">YES! 😍</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="pester()">No 😢</button>
+            <button id="noBtn" onmouseover="handleNoHover()" onclick="handleNoClick()">No 😢</button>
         </div>
     </div>
 
     <div class="container" id="celebration">
-        <img class="panda-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/nZ7fdasD1FIsM/giphy.gif" alt="Happy Panda">
-        <h1>Wooohoooo! 🎉</h1>
-        <p>I knew you couldn't resist the panda! 🐼</p>
-        <hr>
-        <h3>The Official Schedule:</h3>
-        <ul style="text-align: left; list-style: none;">
-            <li>📍 <strong>Where:</strong> [Your Location]</li>
-            <li>⏰ <strong>When:</strong> Feb 14th, 7:00 PM</li>
-            <li>🍕 <strong>Activity:</strong> Food, Laughs, and more Food.</li>
-        </ul>
-        <p>Can't wait to see you! ❤️</p>
+        <img class="panda-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/nZ7fdasD1FIsM/giphy.gif">
+        <h1>I KNEW IT! ❤️🎉</h1>
+        <p>You've made a panda very happy today.</p>
+        <p><strong>See you on the 14th!</strong></p>
     </div>
 
     <script>
-        let noCount = 0;
-        let yesSize = 1.2;
+        let attemptCount = 0;
+        let yesSize = 1;
         
         const mainQuestion = document.getElementById("main-question");
         const subText = document.getElementById("sub-text");
         const panda = document.getElementById("panda-display");
         const yesBtn = document.getElementById("yesBtn");
-        const loveFill = document.getElementById("loveFill");
-        const meterText = document.getElementById("meter-text");
+        const noBtn = document.getElementById("noBtn");
 
         const phrases = [
-            "Are you sure? 🤨",
-            "Really sure?? 😭",
-            "Think about the pandas... 🐼",
-            "I'll be very sad... 💔",
-            "Very very very sad...",
-            "Okay, now you're just being mean! 🥺",
-            "I'm gonna cry... 🌊",
-            "LOOK AT THE YES BUTTON! IT'S HUGE!"
+            "Wait, really? 🤨",
+            "Think about the snacks! 🍕",
+            "But the panda loves you... 🥺",
+            "You're breaking my heart! 💔",
+            "I'm gonna tell your mom! 😤",
+            "Last chance to say yes! 🛑",
+            "Fine, click No if you're heartless! 😭"
         ];
 
         const pandas = [
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/vFuP5vLp7SntS/giphy.gif", // Sad
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/106LII8YtSpXnW/giphy.gif", // Crying
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/6109fNjgS20xO/giphy.gif", // Plea
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/L95W4wv8nnb9K/giphy.gif"  // Heartbroken
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/vFuP5vLp7SntS/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/106LII8YtSpXnW/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/6109fNjgS20xO/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/L95W4wv8nnb9K/giphy.gif"
         ];
 
-        function moveButton() {
-            const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            btn.style.position = "fixed";
-            btn.style.left = x + "px";
-            btn.style.top = y + "px";
+        function handleNoHover() {
+            // Only run away for the first 3 tries
+            if (attemptCount < 3) {
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+                noBtn.style.position = "fixed";
+                noBtn.style.left = x + "px";
+                noBtn.style.top = y + "px";
+                attemptCount++;
+            }
         }
 
-        function pester() {
-            noCount++;
-            // Update Text
-            mainQuestion.innerText = phrases[Math.min(noCount, phrases.length - 1)];
-            subText.innerText = "You clicked 'No' " + noCount + " times. My heart is breaking!";
+        function handleNoClick() {
+            // This runs once they finally "catch" the button after 3 tries
+            attemptCount++;
             
-            // Update Panda
-            panda.src = pandas[Math.min(noCount, pandas.length - 1)];
+            // Update Text & Panda
+            if (attemptCount - 3 < phrases.length) {
+                mainQuestion.innerText = phrases[attemptCount - 3];
+            } else {
+                mainQuestion.innerText = "Okay, just click Yes already! 😂";
+            }
 
-            // Make Yes button Grow
-            yesSize += 0.3;
-            yesBtn.style.fontSize = yesSize + "rem";
-            yesBtn.style.padding = (15 + noCount * 5) + "px " + (30 + noCount * 10) + "px";
+            subText.innerText = "Rejection count: " + (attemptCount);
+            panda.src = pandas[Math.min(attemptCount % pandas.length, pandas.length - 1)];
 
-            // Update Love Meter (backwards!)
-            let percent = Math.max(0, 100 - (noCount * 10));
-            loveFill.style.width = percent + "%";
-            meterText.innerText = percent + "% (You're breaking it!)";
+            // Make Yes Button Huge
+            yesSize += 0.5;
+            yesBtn.style.transform = `scale(${yesSize})`;
+            
+            // If they keep clicking no, move the "No" button somewhere else once
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
         }
 
         function celebrate() {
             document.getElementById("quiz-box").style.display = "none";
             document.getElementById("celebration").style.display = "block";
             
-            // Confetti Cannon!
-            var duration = 15 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            // Instant Confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
 
-            function randomInRange(min, max) {
-              return Math.random() * (max - min) + min;
-            }
-
-            var interval = setInterval(function() {
-              var timeLeft = animationEnd - Date.now();
-              if (timeLeft <= 0) return clearInterval(interval);
-              var particleCount = 50 * (timeLeft / duration);
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
+            // Continuous Confetti
+            var end = Date.now() + (10 * 1000);
+            (function frame() {
+              confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0 } });
+              confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1 } });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            }());
         }
 
-        // Floating Hearts Background
-        function createHeart() {
+        // Background Hearts
+        setInterval(() => {
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
-            heart.innerHTML = ['❤️', '💖', '✨', '🐼', '🌸'][Math.floor(Math.random() * 5)];
+            heart.innerHTML = ['❤️', '💖', '🐼', '✨'][Math.floor(Math.random() * 4)];
             heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            heart.style.fontSize = (Math.random() * 20 + 10) + "px";
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 4000);
-        }
-        setInterval(createHeart, 400);
-
+        }, 300);
     </script>
 </body>
 </html>
