@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Invitation</title>
+    <title>Wait... I have a question!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --primary-pink: #ffafbd;
@@ -14,179 +15,224 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Comic Sans MS', 'cursive', sans-serif;
             background: linear-gradient(135deg, var(--primary-pink), #ffc3a0);
             color: #4a4a4a;
-            overflow-x: hidden;
-            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Floating Hearts Background */
-        .hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .heart {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.6);
-            animation: float 6s linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Content Sections */
         .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            max-width: 600px;
+            margin: 50px 20px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 10;
         }
 
-        h1 { font-size: 3rem; color: var(--deep-red); margin-bottom: 10px; }
-        p { font-size: 1.2rem; line-height: 1.6; }
-
-        .photo-frame {
+        /* Panda Gif Styling */
+        .panda-img {
             width: 200px;
             height: 200px;
-            margin: 20px auto;
-            border-radius: 50%;
-            border: 5px solid white;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            margin-bottom: 20px;
         }
 
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* The Big Question Section */
-        .question-box {
-            margin-top: 50px;
-            padding: 30px;
-            position: relative;
-        }
-
-        .btn-group {
+        h1 { color: var(--deep-red); font-size: 2.5rem; }
+        
+        .btn-container {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 20px;
             margin-top: 30px;
-            height: 60px;
+            flex-wrap: wrap;
+            min-height: 150px;
         }
 
         button {
-            padding: 15px 40px;
+            padding: 15px 30px;
             font-size: 1.2rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
+            transition: all 0.3s ease;
         }
 
         #yesBtn {
-            background-color: var(--deep-red);
+            background-color: #4CAF50;
             color: white;
-            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
         }
 
         #noBtn {
-            background-color: #ccc;
-            color: #666;
-            position: absolute; /* Needed for the move logic */
+            background-color: var(--deep-red);
+            color: white;
+            position: relative;
         }
 
-        #yesBtn:hover { transform: scale(1.1); }
-
-        /* Celebration Screen */
-        #celebration {
-            display: none;
-            animation: fadeIn 1s;
+        /* Floating Hearts */
+        .floating-heart {
+            position: fixed;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 4s linear infinite;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
 
+        /* Hidden Sections */
+        #celebration { display: none; }
+        
+        .love-meter {
+            margin-top: 20px;
+            background: #eee;
+            border-radius: 20px;
+            height: 20px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .love-fill {
+            background: var(--deep-red);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+        }
     </style>
 </head>
 <body>
 
-    <div class="hearts" id="heartContainer"></div>
-
-    <div class="container" id="mainContent">
-        <div class="photo-frame">
-            <img src="https://via.placeholder.com/200?text=Us+❤️" alt="Our Picture">
-        </div>
-
-        <h1>Hi Favorite Human,</h1>
-        <p>I was thinking about all the reasons why I'm lucky to have you... but the list was way too long for a single website.</p>
+    <div class="container" id="quiz-box">
+        <img id="panda-display" class="panda-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif" alt="Panda">
         
-        <div style="font-style: italic; margin: 20px; border-left: 4px solid var(--deep-red); padding-left: 15px; text-align: left;">
-            "You make the mundane feel like a movie, and every day feel like a celebration."
-        </div>
+        <h1 id="main-question">Will you be my Valentine? 🐼❤️</h1>
+        <p id="sub-text">Please? It'll be the best date ever, I promise!</p>
 
-        <div class="question-box">
-            <h2>Will you be my Valentine?</h2>
-            <div class="btn-group">
-                <button id="yesBtn" onclick="showLove()">YES!</button>
-                <button id="noBtn" onmouseover="moveNo()">No</button>
-            </div>
+        <div class="love-meter"><div class="love-fill" id="loveFill"></div></div>
+        <p><small>Love Meter: <span id="meter-text">0%</span></small></p>
+
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">YES! 😍</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="pester()">No 😢</button>
         </div>
     </div>
 
     <div class="container" id="celebration">
-        <h1>YAY! ❤️</h1>
-        <p>You've made me the happiest person on the internet!</p>
-        <p><strong>Date Details:</strong> February 14th @ 7:00 PM</p>
-        <p><em>Dress Code: Your beautiful smile (and something fancy-ish)</em></p>
-        <div style="font-size: 50px;">🍕🍷🌹</div>
+        <img class="panda-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/nZ7fdasD1FIsM/giphy.gif" alt="Happy Panda">
+        <h1>Wooohoooo! 🎉</h1>
+        <p>I knew you couldn't resist the panda! 🐼</p>
+        <hr>
+        <h3>The Official Schedule:</h3>
+        <ul style="text-align: left; list-style: none;">
+            <li>📍 <strong>Where:</strong> [Your Location]</li>
+            <li>⏰ <strong>When:</strong> Feb 14th, 7:00 PM</li>
+            <li>🍕 <strong>Activity:</strong> Food, Laughs, and more Food.</li>
+        </ul>
+        <p>Can't wait to see you! ❤️</p>
     </div>
 
     <script>
-        // 1. Create floating hearts
+        let noCount = 0;
+        let yesSize = 1.2;
+        
+        const mainQuestion = document.getElementById("main-question");
+        const subText = document.getElementById("sub-text");
+        const panda = document.getElementById("panda-display");
+        const yesBtn = document.getElementById("yesBtn");
+        const loveFill = document.getElementById("loveFill");
+        const meterText = document.getElementById("meter-text");
+
+        const phrases = [
+            "Are you sure? 🤨",
+            "Really sure?? 😭",
+            "Think about the pandas... 🐼",
+            "I'll be very sad... 💔",
+            "Very very very sad...",
+            "Okay, now you're just being mean! 🥺",
+            "I'm gonna cry... 🌊",
+            "LOOK AT THE YES BUTTON! IT'S HUGE!"
+        ];
+
+        const pandas = [
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/vFuP5vLp7SntS/giphy.gif", // Sad
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/106LII8YtSpXnW/giphy.gif", // Crying
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/6109fNjgS20xO/giphy.gif", // Plea
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/L95W4wv8nnb9K/giphy.gif"  // Heartbroken
+        ];
+
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = "fixed";
+            btn.style.left = x + "px";
+            btn.style.top = y + "px";
+        }
+
+        function pester() {
+            noCount++;
+            // Update Text
+            mainQuestion.innerText = phrases[Math.min(noCount, phrases.length - 1)];
+            subText.innerText = "You clicked 'No' " + noCount + " times. My heart is breaking!";
+            
+            // Update Panda
+            panda.src = pandas[Math.min(noCount, pandas.length - 1)];
+
+            // Make Yes button Grow
+            yesSize += 0.3;
+            yesBtn.style.fontSize = yesSize + "rem";
+            yesBtn.style.padding = (15 + noCount * 5) + "px " + (30 + noCount * 10) + "px";
+
+            // Update Love Meter (backwards!)
+            let percent = Math.max(0, 100 - (noCount * 10));
+            loveFill.style.width = percent + "%";
+            meterText.innerText = percent + "% (You're breaking it!)";
+        }
+
+        function celebrate() {
+            document.getElementById("quiz-box").style.display = "none";
+            document.getElementById("celebration").style.display = "block";
+            
+            // Confetti Cannon!
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+              if (timeLeft <= 0) return clearInterval(interval);
+              var particleCount = 50 * (timeLeft / duration);
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Floating Hearts Background
         function createHeart() {
             const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            document.getElementById('heartContainer').appendChild(heart);
-
-            setTimeout(() => { heart.remove(); }, 6000);
+            heart.classList.add('floating-heart');
+            heart.innerHTML = ['❤️', '💖', '✨', '🐼', '🌸'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
         }
-        setInterval(createHeart, 300);
+        setInterval(createHeart, 400);
 
-        // 2. The "No" button runaway logic
-        function moveNo() {
-            const btn = document.getElementById('noBtn');
-            // Move button to random position within the container
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
-            
-            btn.style.position = 'fixed';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-        }
-
-        // 3. The "Yes" click logic
-        function showLove() {
-            document.getElementById('mainContent').style.display = 'none';
-            document.getElementById('celebration').style.display = 'block';
-            
-            // Add a burst of hearts
-            for(let i=0; i<50; i++) {
-                setTimeout(createHeart, i * 20);
-            }
-        }
     </script>
 </body>
 </html>
