@@ -46,22 +46,17 @@
             display: flex; justify-content: center; align-items: center;
         }
 
-        .gif-box img { 
-            max-height: 100%; border-radius: 15px; 
-        }
+        .gif-box img { max-height: 100%; border-radius: 15px; background: white; }
 
-        h1 { font-size: 1.5rem; color: var(--deep-red); margin-bottom: 15px; padding: 0 10px; line-height: 1.4; }
-        p { font-size: 1.1rem; margin-bottom: 30px; padding: 0 10px; }
+        h1 { font-size: 1.5rem; color: var(--deep-red); margin-bottom: 15px; line-height: 1.4; }
+        p { font-size: 1.1rem; margin-bottom: 30px; font-weight: bold; }
 
-        .btn-group { 
-            display: flex; justify-content: center; align-items: center; 
-            gap: 15px; flex-wrap: wrap; 
-        }
+        .btn-group { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
 
         button { 
             padding: 12px 30px; font-size: 1rem; border: none; 
             border-radius: 50px; cursor: pointer; font-weight: bold;
-            transition: transform 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .btn-yes { background-color: var(--deep-red); color: white; position: relative; z-index: 100; }
@@ -75,40 +70,40 @@
 
     <div id="page1" class="container">
         <div class="gif-box">
-            <img src="https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-hello.gif" alt="Bubu Dudu Hello">
+            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJSm3dWTM8pGJK4/giphy.gif" alt="Bubu Hello">
         </div>
         <h1>En chinni hangella yavd yavdo link click madbardu antha gottilva? 🤨</h1>
         <p>Hogli bidu, madi aythalla, munduk hogana...</p>
-        <button class="btn-yes" onclick="showPage(2)">Yes, hogana!</button>
+        <button class="btn-yes" onclick="goToQuestion()">Yes, hogana!</button>
     </div>
 
     <div id="page2" class="container hidden">
         <div class="gif-box">
-            <img id="main-gif" src="https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-request.gif" alt="Bubu Dudu Request">
+            <img id="main-gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3R6Zzh3ZzR6Zzh3ZzR6Zzh3ZzR6Zzh3ZzR6Zzh3ZzR6Zzh3ZzR6JmVwPXYxX2ludGVybmFsX2dpZl9hY3R1YWxfZ2lmX2J5X2lkJmN0PWc/vFuP5vLp7SntS/giphy.gif" alt="Bubu Request">
         </div>
         <h1 id="question-text">Vishya en andre, Valentines Day banthu alva... <br>Neen nan Valentine agthiya Bangu? 🌹</h1>
         <div class="btn-group">
-            <button id="yesBtn" class="btn-yes" onclick="showPage(3)">Yes! ❤️</button>
+            <button id="yesBtn" class="btn-yes" onclick="handleFinalYes()">Yes! ❤️</button>
             <button id="noBtn" class="btn-no" onclick="handleNo()">No</button>
         </div>
     </div>
 
-    <div id="page3" class="container hidden">
+    <div id="success-page" class="container hidden">
         <div class="gif-box">
-            <img src="https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-kiss.gif" alt="Bubu Dudu Love">
+            <img id="success-gif" src="">
         </div>
-        <h1>Henge, nangottu neen opkothiya antha! 😎❤️</h1>
-        <p>Thank you Bangu, love you! ❤️</p>
+        <h1 id="success-message"></h1>
+        <p id="success-subtext"></p>
     </div>
 
     <script>
         let noCount = 0;
         let scale = 1;
+        let noExhausted = false;
 
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-            document.getElementById('page' + pageId).classList.remove('hidden');
-            if(pageId === 3) launchConfetti();
+        function goToQuestion() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
         }
 
         function handleNo() {
@@ -121,31 +116,48 @@
             if(noCount === 1) {
                 q.innerHTML = "Ayth bidu hogthini nanu Thumkur ge, elli slick bag... 🎒🚶‍♂️";
                 n.innerText = "Sari Hogu";
-                g.src = "https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-sad-walk.gif"; 
+                g.src = "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmwwazR6NmwwazR6NmwwazR6NmwwazR6NmwwazR6NmwwazR6JmVwPXYxX2ludGVybmFsX2dpZl9hY3R1YWxfZ2lmX2J5X2lkJmN0PWc/6109fNjgS20xO/giphy.gif"; 
             } else if (noCount === 2) {
                 q.innerHTML = "Mathe 'No' na... Pakki g nan mel love kadme agide 🥺💔";
                 n.innerText = "Hu Kadme Agide";
-                g.src = "https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-cry.gif"; 
+                g.src = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmwwazR6NmwwazR6NmwwazR6NmwwazR6NmwwazR6NmwwazR6JmVwPXYxX2ludGVybmFsX2dpZl9hY3R1YWxfZ2lmX2J5X2lkJmN0PWc/L95W4wv8nnb9K/giphy.gif"; 
             } else if (noCount === 3) {
                 q.innerHTML = "Innu 'No' ne? Horte nanu surya mulgo kade, Madavara train athkondu 🚂🌅";
                 n.innerText = "Bye Bye";
-                g.src = "https://res.cloudinary.com/dq7l82uqc/image/upload/v1707554984/bubu-angry.gif"; 
+                g.src = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmwwazR6NmwwazR6NmwwazR6NmwwazR6NmwwazR6NmwwazR6JmVwPXYxX2ludGVybmFsX2dpZl9hY3R1YWxfZ2lmX2J5X2lkJmN0PWc/106LII8YtSpXnW/giphy.gif"; 
             } else {
-                q.innerHTML = "Saak maade! Yes oththe please! 😭";
+                q.innerHTML = "Saak maade! Iga 'Yes' mathra option irodu! 😭❤️";
                 n.style.display = 'none';
+                noExhausted = true; 
             }
 
-            scale += 0.5;
+            scale += 0.6;
             y.style.transform = `scale(${scale})`;
             y.style.margin = `${10 * scale}px`;
         }
 
-        function launchConfetti() {
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+        function handleFinalYes() {
+            document.getElementById('page2').classList.add('hidden');
+            const successPage = document.getElementById('success-page');
+            const successGif = document.getElementById('success-gif');
+            const successMsg = document.getElementById('success-message');
+            const successSub = document.getElementById('success-subtext');
+
+            successPage.classList.remove('hidden');
+
+            if (noExhausted) {
+                // LAST YES FLOW
+                successGif.src = "https://media.giphy.com/media/m0MfjLtKOgTPG/giphy.gif"; 
+                successMsg.innerHTML = "Henge, nangottu neen opkothiya antha! 😎❤️";
+                successSub.innerHTML = "thank you bangu, love you";
+            } else {
+                // EARLY YES FLOW
+                successGif.src = "https://media.giphy.com/media/nZ7fdasD1FIsM/giphy.gif";
+                successMsg.innerHTML = "Ist bega opkondya, no click madthiya anonde 😂❤️";
+                successSub.innerHTML = "love you bangu!";
+            }
+            
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
         setInterval(() => {
